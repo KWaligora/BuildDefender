@@ -36,7 +36,7 @@ public class ResourceManager : MonoBehaviour
     {
         foreach (ResourceTypeSO resourceType in resourceAmountDictionary.Keys)
         {
-            Debug.Log(resourceType.nameString + " " + resourceAmountDictionary[resourceType]);
+           // Debug.Log(resourceType.nameString + " " + resourceAmountDictionary[resourceType]);
         }
     }
 
@@ -44,5 +44,10 @@ public class ResourceManager : MonoBehaviour
     {
         resourceAmountDictionary[resourceType] += amount;
         TestLogResourceAmountDictionary();
+    }
+
+    public int GetResourceAmount(ResourceTypeSO resourceType)
+    {
+        return resourceAmountDictionary[resourceType];
     }
 }
