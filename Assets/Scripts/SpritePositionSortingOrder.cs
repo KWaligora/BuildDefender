@@ -5,8 +5,9 @@ using UnityEngine;
 public class SpritePositionSortingOrder : MonoBehaviour
 {
     [SerializeField] private bool runOnce;
-    private SpriteRenderer spriteRenderer;
+    [SerializeField] private float positionOffsetY;
 
+    private SpriteRenderer spriteRenderer;
 
     private void Awake()
     {
@@ -16,7 +17,7 @@ public class SpritePositionSortingOrder : MonoBehaviour
     private void LateUpdate()
     {
         float precisionMultiplayer = 5f;
-        spriteRenderer.sortingOrder = (int)(-transform.position.y * precisionMultiplayer);
+        spriteRenderer.sortingOrder = (int)(-(transform.position.y + positionOffsetY) * precisionMultiplayer);
 
         if (runOnce)
             Destroy(this);
