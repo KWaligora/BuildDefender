@@ -80,6 +80,19 @@ public class BuildingManager : MonoBehaviour
                 }
             }
         }
-        return true;
+
+        float maxConstructionRadius = 25f;
+
+        collider2DArray = Physics2D.OverlapCircleAll(position, maxConstructionRadius);
+
+        foreach (Collider2D collider2D in collider2DArray)
+        {
+            BuildingTypeHolder buildingTypeHolder = collider2D.GetComponent<BuildingTypeHolder>();
+            if (buildingTypeHolder != null)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }
