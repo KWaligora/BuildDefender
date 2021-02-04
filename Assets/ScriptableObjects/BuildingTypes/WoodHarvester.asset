@@ -21,3 +21,6 @@ MonoBehaviour:
     maxResourceAmount: 7
   sprite: {fileID: 21300000, guid: 793ca27a5a3378149aaa12abe85933f4, type: 3}
   minConstructionRadius: 7
+  constructionResourceCostArray:
+  - ResourceType: {fileID: 11400000, guid: 9af969bf4d985c04cbf512da5edf49b3, type: 2}
+    amount: 10
