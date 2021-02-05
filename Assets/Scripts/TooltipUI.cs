@@ -11,6 +11,7 @@ public class TooltipUI : MonoBehaviour
     [SerializeField] private RectTransform canvasRectTransform;
     private TextMeshProUGUI textMeshPro;
     private RectTransform backgroundRectTransform;
+    private TooltipTimer tooltipTimer;
 
     private void Awake()
     {
@@ -24,17 +25,28 @@ public class TooltipUI : MonoBehaviour
 
     private void Update()
     {
-        Vector2 anchoredPosition = Input.mousePosition / canvasRectTransform.localScale.x;
-        
-        if(anchoredPosition.x + backgroundRectTransform.rect.width > canvasRectTransform.rect.width)
-        {
-            anchoredPosition.x = canvasRectTransform.rect.width - backgroundRectTransform.rect.width;
-        }
+        HandleFollowMouse();        
 
-        if (anchoredPosition.y + backgroundRectTransform.rect.height > canvasRectTransform.rect.height)
+        if(tooltipTimer != null)
         {
-            anchoredPosition.y = canvasRectTransform.rect.height - backgroundRectTransform.rect.height;
+            tooltipTimer.timer -= Time.deltaTime;
+            if (tooltipTimer.timer <= 0)
+            {
+                Hide();
+            }
         }
+    }
+
+    private void HandleFollowMouse()
+    {
+        Vector2 anchoredPosition = Input.mousePosition / canvasRectTransform.localScale.x;
+
+        if (anchoredPosition.x + backgroundRectTransform.rect.width > canvasRectTransform.rect.width)        
+                anchoredPosition.x = canvasRectTransform.rect.width - backgroundRectTransform.rect.width;
+        
+
+        if (anchoredPosition.y + backgroundRectTransform.rect.height > canvasRectTransform.rect.height)        
+                anchoredPosition.y = canvasRectTransform.rect.height - backgroundRectTransform.rect.height;        
 
         rectTransform.anchoredPosition = anchoredPosition;
     }
@@ -49,14 +61,21 @@ public class TooltipUI : MonoBehaviour
         backgroundRectTransform.sizeDelta = textSize + padding;
     }
 
-    public void Show(string tooltipText)
+    public void Show(string tooltipText, TooltipTimer tooltipTimer = null)
     {
+        this.tooltipTimer = tooltipTimer;
         gameObject.SetActive(true);
         SetText(tooltipText);
+        HandleFollowMouse();        
     }
 
     public void Hide()
     {
         gameObject.SetActive(false);
+    }
+
+    public class TooltipTimer
+    {
+        public float timer;
     }
 }
