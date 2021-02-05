@@ -5,11 +5,15 @@ using UnityEngine;
 public class Building : MonoBehaviour
 {
     private HealthSystem healthSystem;
+    private BuildingTypeSO buildingType;
 
     // Start is called before the first frame update
     private void Start()
     {
+        buildingType = GetComponent<BuildingTypeHolder>().buildingType;
         healthSystem = GetComponent<HealthSystem>();
+
+        healthSystem.SetHealthAmountMax(buildingType.HealthAmountMax, true);
         healthSystem.OnDied += HealthSystem_OnDied;
     }
 
