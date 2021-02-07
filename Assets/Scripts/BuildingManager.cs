@@ -15,6 +15,8 @@ public class BuildingManager : MonoBehaviour
         public BuildingTypeSO activeBuildingType;
     }
 
+    [SerializeField] private Building hqBuilding;
+
     private BuildingTypeSO activeBuildingType;
     private BuildingTypeListSO buildingTypeList;
     private Camera mainCamera;
@@ -30,7 +32,7 @@ public class BuildingManager : MonoBehaviour
     // On game begin
     private void Start()
     {
-       mainCamera = Camera.main;       
+        mainCamera = Camera.main;
     }
 
     // Update is called once per frame
@@ -38,7 +40,7 @@ public class BuildingManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
         {
-            if (activeBuildingType != null) 
+            if (activeBuildingType != null)
             {
                 if (CanSpawnBuilding(activeBuildingType, Utils.GetMouseWorldPosition(), out string errorMessage))
                 {
@@ -54,9 +56,15 @@ public class BuildingManager : MonoBehaviour
                 }
                 else
                 {
-                    TooltipUI.Instance.Show(errorMessage, new TooltipUI.TooltipTimer { timer = 2f});
+                    TooltipUI.Instance.Show(errorMessage, new TooltipUI.TooltipTimer { timer = 2f });
                 }
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            Vector3 enemySpawnPos = Utils.GetMouseWorldPosition() + Utils.GetRandomDir() * 5f;
+            Enemy.Create(enemySpawnPos);
         }
     }
 
@@ -84,14 +92,14 @@ public class BuildingManager : MonoBehaviour
             return false;
         }
 
-       collider2DArray = Physics2D.OverlapCircleAll(position, buildingType.minConstructionRadius);
+        collider2DArray = Physics2D.OverlapCircleAll(position, buildingType.minConstructionRadius);
 
         foreach (Collider2D collider2D in collider2DArray)
         {
             BuildingTypeHolder buildingTypeHolder = collider2D.GetComponent<BuildingTypeHolder>();
-            if(buildingTypeHolder != null)
+            if (buildingTypeHolder != null)
             {
-                if(buildingTypeHolder.buildingType == buildingType)
+                if (buildingTypeHolder.buildingType == buildingType)
                 {
                     errorMessege = "Too close to another building of the same type!";
                     return false;
@@ -114,5 +122,10 @@ public class BuildingManager : MonoBehaviour
         }
         errorMessege = "Too far from any other building!";
         return false;
+    }
+
+    public Building GetHQBuildng()
+    {
+        return hqBuilding;
     }
 }
