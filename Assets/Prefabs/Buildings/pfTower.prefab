@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7759439195951178853}
   - component: {fileID: 8984728699278619841}
   - component: {fileID: -6029129165326893607}
+  - component: {fileID: -3049277266681707941}
   m_Layer: 0
   m_Name: pfTower
   m_TagString: Untagged
@@ -98,6 +99,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d81fdcf6de1a55144ab5c018be2e44cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-3049277266681707941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 969576293635331826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb8162a9bd6a4fb48be60a84706f2b05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2848524048026651907
