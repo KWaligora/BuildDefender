@@ -4,20 +4,41 @@ using UnityEngine;
 
 public class Tower : MonoBehaviour
 {
-
-    private Transform targetTransform;
+    private Vector3 projectileSpawnPosition;
+    private Enemy targetEnemy;
 
     private float lookForTargetTimer;
     private float lookForTargetTimerMax = .2f;
 
+    private float shootTimer;
+    [SerializeField] private float shootTimerMax;
+
+    private void Awake()
+    {
+        projectileSpawnPosition = transform.Find("ProjectileSpawnPosition").position;
+    }
+
     private void Update()
     {
         HandleTargeting();
+        HandleShooting();
+    }
+
+    private void HandleShooting()
+    {
+        shootTimer -= Time.deltaTime;
+        if(shootTimer <= 0)
+        {
+            shootTimer += shootTimerMax;
+
+            if (targetEnemy != null)
+                ArrowProjectile.Create(projectileSpawnPosition, targetEnemy);
+        }       
     }
 
     private void LookForTargets()
     {
-        float targetMaxRadius = 10f;
+        float targetMaxRadius = 20f;
         Collider2D[] collider2DArray = Physics2D.OverlapCircleAll(transform.position, targetMaxRadius);
 
         foreach (Collider2D collider2D in collider2DArray)
@@ -25,14 +46,14 @@ public class Tower : MonoBehaviour
             Enemy enemy = collider2D.GetComponent<Enemy>();
             if (enemy != null)
             {
-                if (targetTransform == null)
-                    targetTransform = enemy.transform;
+                if (targetEnemy == null)
+                    targetEnemy = enemy;
                 else
                 {
                     if (Vector3.Distance(transform.position, enemy.transform.position) <
-                        Vector3.Distance(transform.position, targetTransform.position))
+                        Vector3.Distance(transform.position, targetEnemy.transform.position))
                     {
-                        targetTransform = enemy.transform;
+                        targetEnemy = enemy;
                     }
                 }
             }
@@ -47,5 +68,5 @@ public class Tower : MonoBehaviour
             lookForTargetTimer += lookForTargetTimerMax;
             LookForTargets();
         }
-    }
+    }   
 }
