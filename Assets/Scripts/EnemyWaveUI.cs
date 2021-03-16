@@ -24,7 +24,7 @@ public class EnemyWaveUI : MonoBehaviour
     private void Start()
     {
         mainCamera = Camera.main;
-        SetWaveNumberText("wave 0");
+        SetWaveNumberText("Wave 0");
         enemyWaveManger.OnWaveNumberChanged += EnemyWaveManger_OnWaveNumberChanged;
     }
 
